@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text x='0' y='14' font-size='14'>❤️</text></svg>">
+    <title>💌 For My Vals</title>
+    <style>
+        /* ===== RESET 100% MOBILE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #7f1921;  /* Rouge profond demandé */
+            background: linear-gradient(145deg, #7f1921, #69151c);
+            font-family: 'Georgia', 'Playfair Display', 'Cormorant Garamond', serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 10px;
+            position: relative;
+        }
+
+        /* ===== TITRE DOUX ===== */
+        .title-section {
+            text-align: center;
+            margin-bottom: 20px;
+            width: 100%;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .title-section h1 {
+            color: #ffd9d9;
+            font-size: clamp(28px, 8vw, 42px);
+            font-weight: 400;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+            margin-bottom: 6px;
+        }
+
+        .title-section p {
+            color: #ffc2c2;
+            font-size: clamp(16px, 4.5vw, 20px);
+            font-style: italic;
+            border-top: 1px solid #b34f4f;
+            border-bottom: 1px solid #b34f4f;
+            display: inline-block;
+            padding: 8px 20px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== CARROUSEL PORTRAIT ===== */
+        .carousel-container {
+            width: 100%;
+            max-width: 400px;  /* Parfait pour portrait mobile */
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 28px;
+            box-shadow: 0 25px 35px rgba(0,0,0,0.3);
+        }
+
+        /* Zone du carrousel */
+        .carousel-viewport {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            display: flex;
+            flex-wrap: nowrap;
+            border-radius: 28px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            background: #511111;
+            scrollbar-width: thin;
+            scrollbar-color: #ffa7a7 #4a1212;
+        }
+
+        /* Personnalisation scroll (Webkit) */
+        .carousel-viewport::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel-viewport::-webkit-scrollbar-track {
+            background: #4a1212;
+            border-radius: 20px;
+        }
+
+        .carousel-viewport::-webkit-scrollbar-thumb {
+            background: #ffb6b6;
+            border-radius: 20px;
+            border: 1px solid #ffdfdf;
+        }
+
+        /* Chaque slide = format portrait */
+        .slide {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            scroll-snap-stop: always;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 16px;
+            background: transparent;
+            min-height: 580px;  /* Hauteur portrait */
+        }
+
+        /* Carte flyer portrait */
+        .flyer-card {
+            width: 100%;
+            max-width: 340px;  /* Format carte portrait */
+            aspect-ratio: 3 / 4;  /* Proportion portrait parfait */
+            background: #fffbf9;
+            background: linear-gradient(145deg, #fffbf9, #fff4f0);
+            border-radius: 32px 12px 32px 12px;
+            box-shadow: 
+                0 20px 30px rgba(30, 10, 10, 0.4),
+                0 0 0 1px #ffdbd1,
+                inset 0 -4px 0 #dba39a;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s;
+            border: 1px solid #ffe7e0;
+        }
+
+        /* Décoration de chaque carte */
+        .heart-corner {
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            font-size: 28px;
+            opacity: 0.3;
+            color: #b14b4b;
+        }
+
+        .heart-corner-right {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            font-size: 32px;
+            opacity: 0.2;
+            color: #b14b4b;
+            transform: rotate(10deg);
+        }
+
+        /* Typo des flyers */
+        .flyer-title {
+            font-size: clamp(26px, 7vw, 36px);
+            font-weight: 700;
+            font-family: 'Playfair Display', 'Georgia', serif;
+            color: #7f1921;
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            text-shadow: 1px 1px 0 #ffeae5;
+        }
+
+        .flyer-sub {
+            font-size: clamp(16px, 4.5vw, 20px);
+            color: #a05353;
+            font-style: italic;
+            font-family: 'Cormorant Garamond', serif;
+            border-bottom: 2px dashed #e3acac;
+            border-top: 2px dashed #e3acac;
+            padding: 10px 0;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .flyer-message {
+            font-size: clamp(17px, 5vw, 21px);
+            line-height: 1.6;
+            color: #2c1a1a;
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            text-align: center;
+            margin: 15px 0;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            background: rgba(255, 235, 230, 0.3);
+            border-radius: 24px 6px 24px 6px;
+        }
+
+        .flyer-signature {
+            font-size: clamp(24px, 7vw, 34px);
+            font-family: 'Brush Script MT', 'Dancing Script', cursive;
+            color: #8f3a3a;
+            text-align: right;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px dotted #edb2aa;
+        }
+
+        .flyer-date {
+            font-size: 14px;
+            color: #9e6b6b;
+            text-align: right;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        /* Indicateurs de page (dots) */
+        .indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #b47676;
+            border: 1px solid #ffd6d6;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: #ffd6d6;
+            width: 14px;
+            height: 14px;
+            box-shadow: 0 0 10px #ffc3c3;
+        }
+
+        /* ===== SCROLL INDICATION ===== */
+        .scroll-hint {
+            color: #ffd1d1;
+            margin-top: 16px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-style: italic;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .scroll-hint span {
+            animation: bounce 1.8s infinite;
+            font-size: 22px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+
+        /* ===== DÉCORS ===== */
+        .floating-heart {
+            position: absolute;
+            font-size: 28px;
+            color: rgba(255, 200, 200, 0.2);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cœurs décoratifs fond -->
+    <div class="floating-heart" style="top: 2%; left: 2%; font-size: 60px;">❤️</div>
+    <div class="floating-heart" style="bottom: 5%; right: 3%; font-size: 80px; opacity: 0.15;">❤️</div>
+    <div class="floating-heart" style="top: 15%; right: 8%; font-size: 45px;">❤️</div>
+    <div class="floating-heart" style="bottom: 15%; left: 5%; font-size: 55px;">❤️</div>
+
+    <!-- Titre
+    <div class="title-section">
+        <p>💌 FOR YOU</p>
+        <p>Scroll slowly babe</p>
+    </div> -->
+
+    <!-- ===== CARROUSEL PORTRAIT ===== -->
+    <div class="carousel-container">
+        <div class="carousel-viewport" id="carouselViewport">
+            
+            <!-- FLYER 1 – Rencontre -->
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">💗</div>
+                    <div class="heart-corner-right">💗</div>
+                    <div class="flyer-title"></div>
+                    <div class="flyer-sub">Before</div>
+                    <div class="flyer-message">
+                        ✨<br>
+                        I came. I bought. I left.<br>
+                        Not because I was shy.<br>
+                        I just didn't know yet.<br>
+                        <span style="display: block; margin-top: 12px; font-size: 1.2em;">❤️</span>
+                    </div>
+                    <div class="flyer-signature">Your Dope</div>
+                    <div class="flyer-date">14.02.2026</div>
+                </div>
+            </div>
+
+            <!-- FLYER 2 – Amour -->
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">💕</div>
+                    <div class="heart-corner-right">💕</div>
+                    <div class="flyer-title">What you thought</div>
+                    <!-- <div class="flyer-sub">mon algorithme parfait</div> -->
+                    <div class="flyer-message">
+                        🌸<br>
+                        You thought I was full of myself.<br>
+                        I just hadn't stepped in.
+                    </div>
+                    <div class="flyer-signature">Your Dope</div>
+                    <div class="flyer-date">14.02.2026</div>
+                </div>
+            </div>
+
+            <!-- FLYER 3 – Code -->
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">💘</div>
+                    <div class="heart-corner-right">💘</div>
+                    <div class="flyer-title">Christmas</div>
+                    <!-- <div class="flyer-sub">mon cœur open source</div> -->
+                    <div class="flyer-message">
+                        💻<br>
+                        I placed my order.<br>
+                        Then I added a question.<br>
+                        You answered.<br>
+                        Everything changed.
+                    </div>
+                    <div class="flyer-signature">Your Dope</div>
+                    <div class="flyer-date">14.02.2026</div>
+                </div>
+            </div>
+
+            <!-- FLYER 4 – Nuit -->
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">🌙</div>
+                    <div class="heart-corner-right">🌙</div>
+                    <div class="flyer-title">The dance</div>
+                    <!-- <div class="flyer-sub">sans toi, sans sommeil</div> -->
+                    <div class="flyer-message">
+                        ✨<br>
+                        You had no plans.<br>
+                        Neither did I.<br>
+                        We ended up sharing everything.
+                    </div>
+                    <div class="flyer-signature">your Dope</div>
+                    <div class="flyer-date">14.02.2026</div>
+                </div>
+            </div>
+
+            <!-- FLYER 5 – Éternité -->
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">💫</div>
+                    <div class="heart-corner-right">💫</div>
+                    <div class="flyer-title">Kribi</div>
+                    <!-- <div class="flyer-sub">dernière ligne de code</div> -->
+                    <div class="flyer-message">
+                        ∞<br>
+                        Kribi.<br>
+                        The name sounds sweeter now.<br>
+                        Because you're there.
+                    </div>
+                    <div class="flyer-signature">Your Dope</div>
+                    <div class="flyer-date">14.02.2026 • ∞</div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="flyer-card">
+                    <div class="heart-corner">💫</div>
+                    <div class="heart-corner-right">💫</div>
+                    <div class="flyer-title">You & me</div>
+                    <!-- <div class="flyer-sub">dernière ligne de code</div> -->
+                    <div class="flyer-message">
+                        ∞<br>
+                        Stranger.<br>
+                        Then someone.<br>
+                        Now the one I wait for.<br>Love You babe!💘
+                    </div>
+                    <div class="flyer-signature">Your Dope</div>
+                    <div class="flyer-date">14.02.2026 • ∞</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indicateurs (dots) -->
+        <div class="indicators" id="indicators">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+
+    
+
+    <script>
+        // === ACTUALISATION DES DOTS (indicateurs) ===
+        const viewport = document.getElementById('carouselViewport');
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function updateDots() {
+            if (!viewport || slides.length === 0) return;
+            
+            const scrollPosition = viewport.scrollLeft;
+            const slideWidth = viewport.clientWidth;
+            const activeIndex = Math.round(scrollPosition / slideWidth);
+            
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Écoute le scroll
+        viewport.addEventListener('scroll', updateDots);
+        viewport.addEventListener('touchstart', updateDots);
+        viewport.addEventListener('touchend', updateDots);
+        
+        // Initialisation
+        window.addEventListener('load', updateDots);
+        window.addEventListener('resize', updateDots);
+
+        // Clic sur les dots (scroll doux)
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                const slideWidth = viewport.clientWidth;
+                viewport.scrollTo({
+                    left: slideWidth * index,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Petite correction au chargement
+        setTimeout(updateDots, 100);
+    </script>
+
+    <!-- Petit message flottant bonus -->
+    <div style="color: #ffdbdb; margin-top: 24px; font-size: 15px; font-style: italic; text-align: center; max-width: 300px; opacity: 0.9;">
+        « Each card is a piece of me. »
+    </div>
+
+</body>
+</html>
